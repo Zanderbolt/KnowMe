@@ -1,4 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ShowAnswerComponent } from '../components/show-answer/show-answer.component'
+
+import { TypeQuestionComponent } from '../components/type-question/type-question.component';
+
+import { QuestionI } from '../models/question.interface';
+import { QuestionsService } from '../services/questions.service';
+
+import { ToastController } from '@ionic/angular';
+import { TypeAnswerComponent } from '../components/type-answer/type-answer.component';
 
 @Component({
   selector: 'app-list',
@@ -6,34 +16,95 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['list.page.scss']
 })
 export class ListPage implements OnInit {
-  private selectedItem: any;
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
+
+  constructor(public modalController: ModalController,
+    public questionService: QuestionsService,
+    public toastController: ToastController) {
+
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ShowAnswerComponent,
+      componentProps: {
+        data: 5
+      }
+    });
+    await modal.present();
+    modal.onDidDismiss()
+      .then(res => alert(JSON.stringify(res)))
+  }
+
+
+  ngOnInit() {
+    this.questionService.getQuestions().subscribe(res => this.questionService._questions = res);
+  }
+
+  selectQuestion(question: QuestionI, _id: string) {
+    this.questionService._questionSelected = question;
+    this.presentAnswerQuestionModal();
+  }
+
+  async presentAnswerQuestionModal() {
+    const modal = await this.modalController.create({
+      component: TypeAnswerComponent,
+      componentProps: {
+        data: 5
+      }
+    });
+    await modal.present();
+    // modal.onDidDismiss()
+    // .then( res => alert(JSON.stringify(res)))
+  }
+
+  likeQuestion(like: boolean, question: QuestionI, _id: string) {
+    if (like) {
+      this.likeToast()
+      question.liked = true;
+      console.log(question);
+      this.questionService.updateQuestion(question, _id);
+    }
+    else {
+      this.disLikeToast()
+      question.liked = false;
+      this.questionService.updateQuestion(question, _id);
+      this.disLikeToast()
     }
   }
 
-  ngOnInit() {
+  async likeToast() {
+    const toast = await this.toastController.create({
+      message: 'You liked this question.',
+      color: "love",
+      buttons: [
+        {
+          side: 'start',
+          icon: 'heart',
+        }
+      ],
+      duration: 2000
+    });
+    toast.present();
   }
-  // add back when alpha.4 is out
-  // navigate(item) {
-  //   this.router.navigate(['/list', JSON.stringify(item)]);
-  // }
+
+  async disLikeToast() {
+    const toast = await this.toastController.create({
+      message: 'You disliked this question.',
+      color: "alert",
+      buttons: [
+        {
+          side: 'start',
+          icon: 'alert',
+        }
+      ],
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  removeQuestion(_id: string) {
+    // console.log(_id);
+    this.questionService.removeQuestion(_id);
+  }
+
 }

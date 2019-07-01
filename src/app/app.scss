@@ -4,3 +4,61 @@
 // styles are for the entire app and not just one component. Additionally, this 
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
+
+ion-label,
+ion-title,
+ion-card {
+    font-family: 'Acme', sans-serif !important;
+}
+
+.list-title {
+    font-size: 25px;
+}
+
+.icon-size {
+    font-size: 25px
+}
+
+
+.question-description {
+    font-style: italic;
+}
+
+
+
+
+.ion-color-love {
+    --ion-color-base: #FFDAF6;
+    --ion-color-base-rgb: 255, 255, 0;
+    --ion-color-contrast: red;
+    --ion-color-contrast-rgb: 0, 0, 0;
+    --ion-color-shade: rgb(33, 12, 36);
+    --ion-color-tint: #F6B0FF;
+}
+
+.ion-color-answer {
+    --ion-color-base: #F7FF9D;
+    --ion-color-base-rgb: 255, 255, 0;
+    --ion-color-contrast: #000000;
+    --ion-color-contrast-rgb: 0, 0, 0;
+    --ion-color-shade: #F7FF9D;
+    --ion-color-tint: #F7FF9D;
+}
+
+.ion-color-fourth {
+    --ion-color-base: #000000;
+    --ion-color-base-rgb: 255, 255, 0;
+    --ion-color-contrast: #000000;
+    --ion-color-contrast-rgb: 0, 0, 0;
+    --ion-color-shade: #000000;
+    --ion-color-tint: #000000;
+}
+
+.ion-color-alert {
+    --ion-color-base: #FA9C2B;
+    --ion-color-base-rgb: 255, 255, 0;
+    --ion-color-contrast: white;
+    --ion-color-contrast-rgb: 0, 0, 0;
+    --ion-color-shade: #FA9C2B;
+    --ion-color-tint: #FA9C2B;
+}

@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="height: 80%">
+    <ion-row justify-content-center align-items-center style="height: 100%">
+
+
+      <ion-card class="ion-text-center" lines="none">
+        <ion-card-header>
+          <ion-card-title>
+            Type your Question.
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <!-- Input with placeholder -->
+          <ion-label color="medium">
+            <ion-icon name="heart" color="danger"></ion-icon>
+            Think Carefully
+            <ion-icon name="heart" color="danger"></ion-icon>
+          </ion-label>
+
+          <!-- Inputs with labels -->
+          <ion-item>
+            <ion-input [(ngModel)]="question.question" class="ion-text-center"></ion-input>
+          </ion-item>
+        </ion-card-content>
+
+        <!-- Round -->
+        <ion-button (click)="addQuestion()" shape="round" color="fourth"> <p style="color: white">Save</p> </ion-button>
+
+      </ion-card>
+      <br>
+    </ion-row>
+  </ion-grid>
+</ion-content>

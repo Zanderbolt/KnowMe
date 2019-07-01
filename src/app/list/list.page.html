@@ -11,17 +11,86 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-icon [name]="item.icon" slot="start"></ion-icon>
-      {{item.title}}
-      <div class="item-note" slot="end">
-        {{item.note}}
-      </div>
-    </ion-item>
+    <ion-list-header class="ion-text-center">
+      <ion-label style="color: #F556CF" class="list-title">
+        <ion-icon name="heart"></ion-icon> Liked Answers.
+      </ion-label>
+    </ion-list-header>
+    <hr>
+    <!-- Multi-line sliding item with icon options on both sides -->
+    <ion-item-sliding *ngFor="let question of questionService._questions">
+      <ion-item *ngIf="question.archived && question.liked">
+        <ion-label (click)="selectQuestion(question, question.id)">
+          <h2> <strong> {{question.question}} </strong></h2>
+          <p *ngIf="question.answered" class="question-description" color="primary"> This Question has been Answered.
+          </p>
+          <p *ngIf="!question.answered" class="question-description" style="color: red"> This Question has NOT been
+            Answered.</p>
+        </ion-label>
+      </ion-item>
+
+      <!-- HEART EMOJI -->
+      <ion-item-options *ngIf="!question.liked" side="start">
+        <ion-item-option color="love" (click)="likeQuestion(true, question, question.id)">
+          <ion-icon slot="icon-only" color="danger" name="heart"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+      <!-- SAD FACE EMOJI -->
+      <ion-item-options *ngIf="question.liked" side="start">
+        <ion-item-option color="warning" (click)="likeQuestion(false, question, question.id)">
+          <ion-icon slot="icon-only" color="dark" name="sad"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+      <!-- TRASH EMOJI -->
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="removeQuestion(question.id)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
-  <!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
-    </div>
-  -->
+
+  <ion-list>
+    <ion-list-header class="ion-text-center">
+      <ion-label style="color: #2A68C8" class="list-title">
+        Other Answers.
+      </ion-label>
+    </ion-list-header>
+    <hr>
+    <!-- Multi-line sliding item with icon options on both sides -->
+    <ion-item-sliding *ngFor="let question of questionService._questions">
+      <ion-item *ngIf="question.archived && !question.liked">
+        <ion-label (click)="selectQuestion(question, question.id)">
+          <h2> <strong> {{question.question}} </strong></h2>
+          <p *ngIf="question.answered" class="question-description" color="primary"> This Question has been Answered.
+          </p>
+          <p *ngIf="!question.answered" class="question-description" style="color: red"> This Question has NOT been
+            Answered.</p>
+        </ion-label>
+      </ion-item>
+
+      <!-- HEART EMOJI -->
+      <ion-item-options *ngIf="!question.liked" side="start">
+        <ion-item-option color="love" (click)="likeQuestion(true, question, question.id)">
+          <ion-icon slot="icon-only" color="danger" name="heart"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+      <!-- SAD FACE EMOJI -->
+      <ion-item-options *ngIf="question.liked" side="start">
+        <ion-item-option color="warning" (click)="likeQuestion(false, question, question.id)">
+          <ion-icon slot="icon-only" color="dark" name="sad"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+      <!-- TRASH EMOJI -->
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="removeQuestion(question.id)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

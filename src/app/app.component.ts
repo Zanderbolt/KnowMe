@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { QuestionsService } from './services/questions.service';
+import { QuestionI } from './models/question.interface';
 
 @Component({
   selector: 'app-root',
@@ -11,21 +13,25 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
+      title: 'Questions',
       url: '/home',
-      icon: 'home'
+      icon: 'help',
+      color: 'primary'
     },
     {
-      title: 'List',
+      title: 'Answers',
       url: '/list',
-      icon: 'list'
+      icon: 'bulb',
+      color: 'warning'
+
     }
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public questionService: QuestionsService
   ) {
     this.initializeApp();
   }

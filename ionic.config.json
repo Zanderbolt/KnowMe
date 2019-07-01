@@ -1,5 +1,7 @@
 {
   "name": "KnowMe",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
